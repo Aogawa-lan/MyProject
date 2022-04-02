@@ -1,27 +1,49 @@
 <template>
-    <div class="todo_sum">
-        <input type="checkbox" name="" id="">
+    <div class="todo_sum" v-show="toTodos.length">
+        <input type="checkbox" name="" id="" :checked="isAll" @click="selectStatus">
 
-        <span>已完成{{ufsum}}/全部{{sum}}</span>
+        <span>已完成{{Doing}}/全部{{toTodos.length}}</span>
 
 
-        <button>清除所有项目</button>
+        <button @click="deleteAll">清除所有项目</button>
     </div>
 </template>
 
 <script>
 export default {
     name:"todo-Sum",
+    props:[
+        "toTodos","removeAll","selectAll"
+    ],
     data(){
         return{
-            sum: 3,
-            ufsum: 0
+        }
+    },
+    computed:{
+        Doing(){
+            return this.toTodos.reduce((pre,todo)=>pre + (todo.status ? 1:0),0)
+        },
+        isAll(){
+            return this.toTodos.length === this.Doing
+        }
+    },
+    methods:{
+        deleteAll(){
+            if(confirm("确认删除所有项？")){
+                this.removeAll(true)
+            }else{
+                console.log('点错了')
+            }
+        },
+        selectStatus(e){
+            this.selectAll(e.target.checked)
         }
     }
 }
 </script>
 
-<style>
+<style scoped>
+/* Sum */
     .todo_sum{
         width: 100%;
         height: 80px;
@@ -43,4 +65,5 @@ export default {
         margin: 15px 4px 0 0;
         cursor: pointer;
     }
+/* Sum */
 </style>

@@ -1,8 +1,12 @@
 <template>
   <ul class="todo_list">
-      <Item class=""/>
-      <Item class=""/>
-      <Item class="no_border"/>
+      <Item v-for="a in toTodos" 
+      :key="toTodos.id" 
+      :toItem="a" 
+      :checkTodo="checkTodo"
+      :deleteTodoId="deleteTodoId"
+      />
+      <!-- 遍历数组数据              基于id排序         传数据给子组件props -->
   </ul>
 </template>
 
@@ -13,11 +17,14 @@ export default {
     name:"todo-Todos",
     components:{
         Item
-    }
+    },props:[
+        "toTodos","checkTodo","deleteTodoId"
+    ]
 }
 </script>
 
-<style>
+<style scoped>
+/* Todos */
     .todo_list{
         width: 100%;
         margin: 0 auto;
@@ -32,4 +39,5 @@ export default {
     .no_border{
         border: none;
     }
+/* Todos */
 </style>
